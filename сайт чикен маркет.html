@@ -1,1 +1,188 @@
-pip install flask
+
+from flask import Flask
+
+app = Flask(__name__)
+
+products = [
+    {"name": "🐔 Котлеты Фантазия", "price": 5000},
+    {"name": "🧀 Котлеты с сыром", "price": 4000},
+    {"name": "🍗 Котлеты с курицей", "price": 4000},
+    {"name": "🥟 Манты", "price": 6000},
+    {"name": "🥔 Вареники", "price": 4000},
+    {"name": "🍖 Пельмени", "price": 4500}
+]
+
+@app.route("/")
+def home():
+
+    cards = ""
+
+    for product in products:
+        cards += f"""
+        <div class="card">
+            <h2>{product['name']}</h2>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <div class="price">{product['price']} ₸</div>
+        </div>
+        """
+
+    return f"""
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Chicken Market</title>
+
+<style>
+
+body {{
+    margin:0;
+    font-family:Arial,sans-serif;
+
+    background:linear-gradient(
+        135deg,
+        #ff5e00,
+        #ff7b00,
+        #ff9500,
+        #ffb700,
+        #ffd000
+    );
+
+    background-size:400% 400%;
+    animation:gradient 8s ease infinite;
+}}
+
+@keyframes gradient {{
+    0% {{background-position:0% 50%;}}
+    50% {{background-position:100% 50%;}}
+    100% {{background-position:0% 50%;}}
+}}
+
+header {{
+    text-align:center;
+    color:white;
+    padding:60px 20px;
+}}
+
+header h1 {{
+    font-size:60px;
+    margin:0;
+}}
+
+header p {{
+    font-size:22px;
+}}
+
+.products {{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+    padding:30px;
+}}
+
+.card {{
+    width:280px;
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(255,120,0,.35);
+    transition:.3s;
+}}
+
+.card:hover {{
+    transform:translateY(-10px);
+}}
+
+.stars {{
+    font-size:20px;
+}}
+
+.price {{
+    font-size:32px;
+    font-weight:bold;
+    color:#ff6b00;
+    margin-top:10px;
+}}
+
+.order {{
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(255,120,0,.35);
+}}
+
+input, select {{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    box-sizing:border-box;
+    border-radius:12px;
+    border:2px solid #ddd;
+}}
+
+button {{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#ff6b00;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}}
+
+footer {{
+    text-align:center;
+    color:white;
+    padding:30px;
+}}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🐔 Chicken Market</h1>
+<p>Домашние полуфабрикаты премиум качества</p>
+</header>
+
+<div class="products">
+{cards}
+</div>
+
+<div class="order">
+<h2>🛒 Оформление заказа</h2>
+
+<input placeholder="Ваше имя">
+<input placeholder="Телефон">
+<input placeholder="Адрес доставки">
+
+<select>
+<option>Котлеты Фантазия</option>
+<option>Котлеты с сыром</option>
+<option>Котлеты с курицей</option>
+<option>Манты</option>
+<option>Вареники</option>
+<option>Пельмени</option>
+</select>
+
+<button>Оформить заказ</button>
+
+</div>
+
+<footer>
+© 2026 Chicken Market
+</footer>
+
+</body>
+</html>
+"""
+
+if __name__ == "__main__":
+    app.run(debug=True)
+""""""
